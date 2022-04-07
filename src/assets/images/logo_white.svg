@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220.832" height="215.416" viewBox="0 0 220.832 215.416">
+  <g id="Logo_White" data-name="Logo White" transform="translate(-324.11 -276.809)">
+    <g id="Grupo_1" data-name="Grupo 1" transform="translate(324.11 297.817)">
+      <path id="Caminho_1" data-name="Caminho 1" d="M107.482,0c59.361,0,107.482,43.29,107.482,96.691,0,7.8-.66,12.242-2.1,14.432C205.491,122.434,176.519,49.3,132.721,66.9,81.436,87.5,0,150.092,0,96.691S48.121,0,107.482,0Z" transform="translate(220.832 183.157) rotate(177)" fill="#fff"/>
+      <ellipse id="Elipse_1" data-name="Elipse 1" cx="25.817" cy="28.082" rx="25.817" ry="28.082" transform="translate(155.44)" fill="#fff"/>
+      <ellipse id="Elipse_2" data-name="Elipse 2" cx="18.57" cy="19.929" rx="18.57" ry="19.929" transform="translate(3.255 36.235)" fill="#fff"/>
+    </g>
+    <path id="Caminho_2" data-name="Caminho 2" d="M61.132-.01C97.6-2.062,128.5,30.515,86.634,48.938s15.758,30.891,15.758,30.891-76.18-7.306-84.828-30.891S24.666,2.043,61.132-.01Z" transform="translate(358.81 276.911)" fill="#fff"/>
+  </g>
+</svg>
