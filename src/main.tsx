@@ -1,16 +1,26 @@
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
-import { theme } from "./assets/theme";
+import 'react-toastify/dist/ReactToastify.min.css';
+
+import { theme } from './assets/theme';
+import { Router } from './Router';
+import { AuthProvider } from './contexts';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <App />
-    </ThemeProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <ThemeProvider theme={theme}>
+          <ToastContainer />
+          <CssBaseline />
+          <Router />
+        </ThemeProvider>
+      </AuthProvider>
+    </BrowserRouter>
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById('root')
 );
