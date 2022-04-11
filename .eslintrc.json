@@ -27,6 +27,7 @@
     "prettier"
   ],
   "rules": {
+    "camelcase": "off",
     "prettier/prettier": "error",
     "no-unused-vars": "warn",
     "@typescript-eslint/naming-convention": [

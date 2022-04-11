@@ -1,22 +1,26 @@
 import { Paid, Savings } from '@mui/icons-material';
 import { Grid, Stack } from '@mui/material';
 import { Typography } from '../../../components';
+import { useFeedback } from '../FeedbackContext';
 import { FeedbackBalanceCard } from './FeedbackBalanceCard';
 
 export const FeedbackBalance = () => {
+  const {
+    data: { balance, coins },
+  } = useFeedback();
   return (
     <Grid container columns={[1, 2, 3, 5]} spacing={5}>
       <Grid item xs={1}>
         <FeedbackBalanceCard
           title="Saldo Atual"
-          amount={2600}
+          amount={balance}
           icon={<Paid color="secondary" />}
         />
       </Grid>
       <Grid item xs={1}>
         <FeedbackBalanceCard
           title="Pontos a distribuir"
-          amount={1000}
+          amount={coins}
           icon={<Savings color="secondary" />}
         />
       </Grid>

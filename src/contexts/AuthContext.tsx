@@ -1,6 +1,7 @@
-import { createContext, FC, useContext, useState } from 'react';
+import { createContext, FC, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { service } from '../services';
+import { useLocalStorage } from '../hooks';
+import { services } from '../services';
 
 export type AuthContextType = {
   data: { user: UserData | null };
@@ -25,6 +26,7 @@ export const AuthProvider: FC = ({ children }) => {
   const navigate = useNavigate();
 
   const [user, setUser] = useState<UserData | null>(null);
+  const [token, setToken] = useLocalStorage('token', '');
 
   const login = (
     payload: UserLoginRequest,
@@ -32,13 +34,17 @@ export const AuthProvider: FC = ({ children }) => {
   ) => {
     console.log(payload);
     if (setLoading) setLoading(true);
-    service.auth
+    services.auth
       .login(payload)
       .then(({ data: { refresh_token, token, user } }) => {
         localStorage.setItem('@tasq/refresh_token', refresh_token);
-        localStorage.setItem('@tasq/token', token);
+        setToken(token);
         setUser(user);
-        navigate('/');
+
+        const url = sessionStorage.getItem('prevUrl');
+        if (url) sessionStorage.removeItem('prevUrl');
+
+        navigate(url || '/test', { replace: !!url });
       })
       .finally(() => {
         if (setLoading) setLoading(false);

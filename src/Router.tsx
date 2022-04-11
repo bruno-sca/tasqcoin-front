@@ -1,10 +1,11 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Login } from './pages/Login';
+import { Feedback, Login } from './pages';
 
 export const Router: React.FC = () => {
   return (
     <Routes>
       <Route path="/auth" element={<Login />} />
+      <Route path="/" element={<Feedback />} />
     </Routes>
   );
 };

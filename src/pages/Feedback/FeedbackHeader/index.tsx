@@ -1,9 +1,14 @@
 import { Add } from '@mui/icons-material';
 import { Box, Paper, Stack, Typography } from '@mui/material';
+
 import { IconButton, Tab, Tabs } from '../../../components';
 import { Avatar } from '../../../components/Avatar';
+import { useFeedback } from '../FeedbackContext';
 
 export const FeedbackHeader = () => {
+  const {
+    data: { name },
+  } = useFeedback();
   return (
     <Paper sx={{ mt: 8.5, mb: 4 }}>
       <Stack sx={{ px: 3.5 }}>
@@ -22,7 +27,7 @@ export const FeedbackHeader = () => {
             variant="h5"
             sx={{ mt: 3.75, ml: 17.5, mb: 1, fontWeight: 'medium' }}
           >
-            Olá, name
+            {name}
           </Typography>
         </Box>
         <Box sx={{ position: 'relative', px: 1.5 }}>

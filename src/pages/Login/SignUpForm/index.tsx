@@ -3,7 +3,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { Button, TextField } from '../../../components';
-import { service } from '../../../services';
+import { services } from '../../../services';
 
 interface IFormState {
   name: string;
@@ -29,7 +29,7 @@ export const SignUpForm = ({ setSignIn }: ISignUpForm) => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await service.user
+    await services.user
       .signup(formState)
       .then(() => {
         toast.success('Account successfully created!');

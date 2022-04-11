@@ -1,7 +1,9 @@
 import { auth } from './auth';
+import { feedback } from './feedback';
 import { user } from './user';
 
-export const service = {
+export const services = {
   auth,
+  feedback,
   user,
 };

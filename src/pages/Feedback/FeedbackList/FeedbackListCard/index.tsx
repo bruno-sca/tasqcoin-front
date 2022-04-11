@@ -1,22 +1,24 @@
-import { ArrowDropDown, ArrowDropUp, Translate } from '@mui/icons-material';
+import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 import { Paper, Stack } from '@mui/material';
-import { Avatar, Typography } from '../../../../components';
+import dayjs from 'dayjs';
+import { useSearchParams } from 'react-router-dom';
 
-type FeedbackListCardProps = {
-  name: string;
-  amount: number;
-  type: 'recieved' | 'sent';
-  createdAt: string;
-};
+import { Avatar, Typography } from '../../../../components';
 
 export const FeedbackListCard = ({
   amount,
-  createdAt,
-  name,
+  created_at,
   type,
-}: FeedbackListCardProps) => {
+  user_from,
+  user_to,
+}: Feedback) => {
+  const user: UserData = type === 'sent' ? user_to : user_from;
+  const [, setSearchParams] = useSearchParams();
   return (
-    <Paper sx={{ mt: 4 }}>
+    <Paper
+      sx={{ mt: 4, cursor: 'pointer' }}
+      onClick={() => setSearchParams({ user: user.id })}
+    >
       <Stack sx={{ px: 2, pt: 5.5, pb: 3.25, position: 'relative' }}>
         <Avatar
           sx={{
@@ -36,7 +38,7 @@ export const FeedbackListCard = ({
             mb: 2,
           }}
         >
-          {name}
+          {user.name}
         </Typography>
         <Typography variant="overline">Pontos de Feedback</Typography>
         <Stack direction="row" alignItems="center">
@@ -56,7 +58,7 @@ export const FeedbackListCard = ({
           variant="overline"
           sx={{ position: 'absolute', bottom: '16px', right: '16px' }}
         >
-          {createdAt}
+          {dayjs(created_at).format('DD/MM/YYYY')}
         </Typography>
       </Stack>
     </Paper>
