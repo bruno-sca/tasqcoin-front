@@ -1,7 +1,10 @@
 type UserData = {
+  id: string;
   name: string;
   email: string;
   avatar_url?: string;
+  balance: number;
+  [x: string]: unknown;
 };
 
 type UserSignUpRequest = {
@@ -9,7 +12,7 @@ type UserSignUpRequest = {
   email: string;
   password: string;
   confirmPassword: string;
-}
+};
 
 type UserSignUpResponse = {
   id: string;
@@ -20,7 +23,7 @@ type UserSignUpResponse = {
   is_admin: boolean;
   avatar: string;
   created_at: Date;
-}
+};
 
 type UserLoginRequest = { email: string; password: string };
 
@@ -29,4 +32,3 @@ type UserLoginResponse = {
   refresh_token: string;
   user: UserData;
 };
-  
