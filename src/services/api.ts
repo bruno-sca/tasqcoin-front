@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-param-reassign */
 import axios, { AxiosInstance, AxiosPromise } from 'axios';
 import { toast } from 'react-toastify';
@@ -12,7 +13,8 @@ const api: Api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('@tasq/token') || '';
+  const token = localStorage.getItem('@tasq/token').replace(/["]+/g, '') || '';
+
   config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
@@ -22,17 +24,9 @@ api.interceptors.response.use(
     return res;
   },
   async (err) => {
-    if (err.response.data.message) toast.error(err.response.data.message);
+    if (err.response?.data.message) toast.error(err.response.data.message);
     const originalConfig = err.config;
 
-    if (
-      originalConfig.url === '/refresh-token' &&
-      err.response.status === 401
-    ) {
-      sessionStorage.setItem('prevUrl', window.location.pathname);
-      window.location.href = '/auth';
-      return Promise.reject(err);
-    }
     if (
       originalConfig.url !== '/refresh-token' &&
       err.response?.status === 401 &&
@@ -52,6 +46,15 @@ api.interceptors.response.use(
       } catch (_error) {
         return Promise.reject(_error);
       }
+    }
+    if (
+      originalConfig.url === '/refresh-token' &&
+      err.response.status === 401
+    ) {
+      sessionStorage.setItem('prevUrl', window.location.pathname);
+      window.location.replace('/auth');
+
+      return Promise.reject(err);
     }
 
     return Promise.reject(err);

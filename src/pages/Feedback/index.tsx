@@ -1,6 +1,8 @@
 import { Stack } from '@mui/material';
+
 import { FeedbackBalance } from './FeedbackBalance';
 import { FeedbackProvider } from './FeedbackContext';
+import { FeedbackCreateModal } from './FeedbackCreateModal';
 import { FeedbackHeader } from './FeedbackHeader';
 import { FeedbackList } from './FeedbackList';
 
@@ -12,6 +14,7 @@ export const Feedback = () => {
         <FeedbackBalance />
         <FeedbackList />
       </Stack>
+      <FeedbackCreateModal />
     </FeedbackProvider>
   );
 };

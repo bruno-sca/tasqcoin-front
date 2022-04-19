@@ -5,6 +5,7 @@ type FeedbackService = {
     payload?: ListFeedbackRequest
   ): ApiResponse<ListFeedbackResponse>;
   getUserBalance(payload?: string): ApiResponse<number>;
+  createFeedback(payload?: CreateFeedbackRequest): ApiResponse<void>;
 };
 
 export const feedback: FeedbackService = {
@@ -14,10 +15,11 @@ export const feedback: FeedbackService = {
         ...payload,
       },
     }),
-  getUserBalance: async (payload?: string) =>
+  getUserBalance: async (payload?) =>
     api.get('/feedbacks/balance', {
       params: {
         ...(payload && { id: payload }),
       },
     }),
+  createFeedback: async (payload?) => api.post('/feedbacks', payload),
 };

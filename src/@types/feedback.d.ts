@@ -18,3 +18,9 @@ type ListFeedbackResponse = {
   feedbacks: Feedback[];
   totalPages: number;
 };
+
+type CreateFeedbackRequest = {
+  user_to_id: string;
+  description?: string;
+  amount: number;
+};
