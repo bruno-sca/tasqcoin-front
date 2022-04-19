@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/naming-convention */
 import { createTheme } from '@mui/material';
 
 declare module '@mui/material/styles' {
@@ -37,6 +39,16 @@ export const theme = createTheme({
     },
   },
   typography: {
+    h6: {
+      fontWeight: 'bold',
+      color: '#172031',
+    },
+    body1: {
+      fontWeight: 'normal',
+      fontSize: '0.9375rem',
+      lineHeight: '1.25rem',
+      color: '#A1A0AE',
+    },
     overline: {
       fontWeight: '300',
       fontSize: '0.9375rem',

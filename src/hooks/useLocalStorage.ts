@@ -12,7 +12,7 @@ export function useLocalStorage<T>(
 ): typeUseLocalStorage<T> {
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
-      const item = window.localStorage.getItem(`@tasq/${key}`);
+      const item = localStorage.getItem(`@tasq/${key}`);
       return item ? JSON.parse(item) : initialValue;
     } catch (error) {
       return initialValue;
@@ -21,11 +21,11 @@ export function useLocalStorage<T>(
   const setValue = (value: T | ((val: T) => T)): void => {
     const valueToStore = value instanceof Function ? value(storedValue) : value;
     setStoredValue(valueToStore);
-    window.localStorage.setItem(`@tasq/${key}`, JSON.stringify(valueToStore));
+    localStorage.setItem(`@tasq/${key}`, JSON.stringify(valueToStore));
   };
 
   const remove = () => {
-    window.localStorage.removeItem(`@tasq/${key}`);
+    localStorage.removeItem(`@tasq/${key}`);
   };
 
   return [storedValue, setValue, remove];

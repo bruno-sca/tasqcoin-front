@@ -8,6 +8,7 @@ import { useFeedback } from '../FeedbackContext';
 export const FeedbackHeader = () => {
   const {
     data: { name },
+    actions: { setModalOpen },
   } = useFeedback();
   return (
     <Paper sx={{ mt: 8.5, mb: 4 }}>
@@ -42,6 +43,7 @@ export const FeedbackHeader = () => {
             <Tab label="Enviados" value="3" />
           </Tabs>
           <IconButton
+            onClick={() => setModalOpen(true)}
             size="large"
             sx={{
               position: 'absolute',

@@ -1,5 +1,6 @@
 import { Stack } from '@mui/material';
 import { ChangeEvent, FormEvent, useState } from 'react';
+
 import { Button, TextField, Typography } from '../../../components';
 import { useAuth } from '../../../contexts';
 
@@ -75,7 +76,7 @@ export const SignInForm: React.FC<ISignInForm> = ({ setSignUp }) => {
       <Stack sx={{ mt: 6 }} alignItems="center">
         <Button
           fullWidth
-          sx={{ textTransform: 'none', width: '290px' }}
+          sx={{ textTransform: 'none', width: '100%', maxWidth: '290px' }}
           variant="outlined"
           onClick={setSignUp}
           disabled={loading}
@@ -87,7 +88,7 @@ export const SignInForm: React.FC<ISignInForm> = ({ setSignUp }) => {
               lineHeight: 'inherit',
             }}
           >
-            Don't have an account?
+            Don&apos;t have an account?
           </Typography>
           &nbsp;Sign Up
         </Button>
