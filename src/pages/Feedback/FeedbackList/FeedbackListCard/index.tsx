@@ -29,6 +29,7 @@ export const FeedbackListCard = ({
             left: '50%',
             transform: 'translate(-50%, -50%)',
           }}
+          src={user.avatar_url}
         />
         <Typography
           sx={{
