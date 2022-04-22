@@ -5,21 +5,17 @@ import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.min.css';
-
 import { theme } from './assets/theme';
 import { Router } from './Router';
-import { AuthProvider } from './contexts';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-        <ThemeProvider theme={theme}>
-          <ToastContainer />
-          <CssBaseline />
-          <Router />
-        </ThemeProvider>
-      </AuthProvider>
+      <ThemeProvider theme={theme}>
+        <ToastContainer />
+        <CssBaseline />
+        <Router />
+      </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

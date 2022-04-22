@@ -1,9 +1,9 @@
 import { ArrowBack } from '@mui/icons-material';
 import { Box, Stack } from '@mui/material';
 import { useState } from 'react';
+
 import { logo_purple, logo_white } from '../../assets/images';
 import { IconButton } from '../../components';
-
 import { Typography } from '../../components/Typography';
 import { SignInForm } from './SignInForm';
 import { SignUpForm } from './SignUpForm';
@@ -73,8 +73,8 @@ export const Login: React.FC = () => {
             onClick={() => setIsSignIn(true)}
             sx={{
               position: 'absolute',
-              top: ['90px', '140px', '200px'],
-              left: [4, 6, 8, 60],
+              top: ['56px', '72px', '90px'],
+              left: [20, 20, 36, 52],
               color: 'black',
             }}
           >
