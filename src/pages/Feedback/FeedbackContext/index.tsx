@@ -13,9 +13,8 @@ import { services } from '../../../services';
 
 export type FeedbackContextType = {
   data: {
-    name: string;
     balance: number;
-    coins: number;
+    targetUser: UserData;
     feedbacksData: {
       feedbacks: Feedback[];
       totalPages: number;
@@ -32,9 +31,8 @@ export type FeedbackContextType = {
 
 export const FeedbackContext = createContext<FeedbackContextType>({
   data: {
-    name: '',
     balance: 0,
-    coins: 0,
+    targetUser: null,
     feedbacksData: {
       feedbacks: [],
       totalPages: 0,
@@ -55,48 +53,51 @@ export const FeedbackProvider: FC = ({ children }) => {
 
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [balance, setBalance] = useState(0);
-  const [coins, setCoins] = useState(0);
-  const [name, setName] = useState('');
+  const [targetUser, setTargetUser] = useState<UserData | null>();
   const [needReload, setNeedReload] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [searchParams] = useSearchParams();
 
-  const targetUser = searchParams.get('user');
+  const targetUserId = searchParams.get('user');
 
   useEffect(() => {
     services.feedback
-      .listUserFeedbacks({ page, ...(targetUser && { id: targetUser }) })
+      .listUserFeedbacks({ page, ...(targetUserId && { id: targetUserId }) })
       .then(({ data }) => {
         setFeedbacks(data.feedbacks);
         setTotalPages(data.totalPages);
       });
-  }, [page, targetUser]);
+  }, [page, targetUserId]);
 
   useEffect(() => {
-    services.feedback.getUserBalance(targetUser).then(({ data }) => {
+    services.feedback.getUserBalance(targetUserId).then(({ data }) => {
       setBalance(data);
     });
-    services.user.getUserInfo(targetUser).then(({ data }) => {
-      setCoins(data.balance);
-      setName(`${targetUser ? '' : 'Olá '}${data.name}`);
-    });
-  }, [targetUser]);
+    services.user
+      .getUserInfo(targetUserId)
+      .then(({ data: { name, ...rest } }) => {
+        setTargetUser({
+          ...rest,
+          name: `${targetUserId ? '' : 'Olá '}${name}`,
+        });
+      });
+  }, [targetUserId]);
 
   useEffect(() => {
     if (needReload) {
       services.feedback
-        .listUserFeedbacks({ page, ...(targetUser && { id: targetUser }) })
+        .listUserFeedbacks({ page, ...(targetUserId && { id: targetUserId }) })
         .then(({ data }) => {
           setFeedbacks(data.feedbacks);
           setTotalPages(data.totalPages);
         });
-      services.feedback.getUserBalance(targetUser).then(({ data }) => {
+      services.feedback.getUserBalance(targetUserId).then(({ data }) => {
         setBalance(data);
       });
       setNeedReload(false);
     }
-  }, [needReload, page, targetUser]);
+  }, [needReload, page, targetUserId]);
 
   const changePage = useCallback(
     (targetPage: number) => {
@@ -108,9 +109,8 @@ export const FeedbackProvider: FC = ({ children }) => {
   const value = useMemo(
     () => ({
       data: {
-        name,
         balance,
-        coins,
+        targetUser,
         feedbacksData: {
           feedbacks,
           totalPages,
@@ -124,7 +124,7 @@ export const FeedbackProvider: FC = ({ children }) => {
         setModalOpen: (bool: boolean) => setIsModalOpen(bool),
       },
     }),
-    [balance, coins, feedbacks, isModalOpen, name, totalPages, page, changePage]
+    [balance, feedbacks, isModalOpen, targetUser, totalPages, page, changePage]
   );
 
   return (

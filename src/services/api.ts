@@ -13,9 +13,10 @@ const api: Api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('@tasq/token').replace(/["]+/g, '') || '';
+  const token = localStorage.getItem('@tasq/token');
 
-  config.headers.Authorization = `Bearer ${token}`;
+  if (token)
+    config.headers.Authorization = `Bearer ${token.replace(/["]+/g, '') || ''}`;
   return config;
 });
 
@@ -27,16 +28,16 @@ api.interceptors.response.use(
     if (err.response?.data.message) toast.error(err.response.data.message);
     const originalConfig = err.config;
 
+    const refreshToken =
+      window.localStorage.getItem('@tasq/refresh_token') || '';
+
     if (
-      originalConfig.url !== '/refresh-token' &&
+      originalConfig?.url !== '/refresh-token' &&
       err.response?.status === 401 &&
       !originalConfig._retry
     ) {
       originalConfig._retry = true;
-
       try {
-        const refreshToken =
-          window.localStorage.getItem('@tasq/refresh_token') || '';
         await services.auth
           .refreshToken(refreshToken)
           .then(({ data: newToken }) => {
@@ -48,11 +49,11 @@ api.interceptors.response.use(
       }
     }
     if (
-      originalConfig.url === '/refresh-token' &&
+      originalConfig?.url === '/refresh-token' &&
       err.response.status === 401
     ) {
       sessionStorage.setItem('prevUrl', window.location.pathname);
-      window.location.replace('/auth');
+      window.location.href = '/auth';
 
       return Promise.reject(err);
     }

@@ -1,8 +1,9 @@
 import { Stack } from '@mui/material';
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Button, TextField, Typography } from '../../../components';
-import { useAuth } from '../../../contexts';
+import { services } from '../../../services';
 
 interface IFormState {
   email: string;
@@ -14,9 +15,7 @@ interface ISignInForm {
 }
 
 export const SignInForm: React.FC<ISignInForm> = ({ setSignUp }) => {
-  const {
-    actions: { login },
-  } = useAuth();
+  const navigate = useNavigate();
   const [formState, setFormState] = useState<IFormState>({
     email: '',
     password: '',
@@ -25,7 +24,21 @@ export const SignInForm: React.FC<ISignInForm> = ({ setSignUp }) => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    login(formState, setLoading);
+    if (setLoading) setLoading(true);
+    await services.auth
+      .login(formState)
+      .then(({ data: { refresh_token, token, user: userData } }) => {
+        localStorage.setItem('@tasq/refresh_token', refresh_token);
+        localStorage.setItem('@tasq/token', token);
+
+        const url = sessionStorage.getItem('prevUrl');
+        if (url) sessionStorage.removeItem('prevUrl');
+
+        navigate(url || '/', { replace: !!url });
+      })
+      .finally(() => {
+        if (setLoading) setLoading(false);
+      });
   };
 
   const handleChange = ({

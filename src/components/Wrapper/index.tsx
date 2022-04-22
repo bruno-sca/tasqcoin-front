@@ -1,6 +1,7 @@
 import { Box, Stack } from '@mui/material';
 import { Navigate, Outlet } from 'react-router-dom';
 
+import { AuthProvider } from '../../contexts';
 import { WrapperHeader } from './WrapperHeader';
 
 export const Wrapper = () => {
@@ -9,18 +10,20 @@ export const Wrapper = () => {
   if (!token) return <Navigate to="/auth" />;
 
   return (
-    <Stack>
-      <WrapperHeader />
-      <Box
-        sx={{
-          maxWidth: '1200px',
-          width: '100%',
-          marginY: [2, 3, 6],
-          marginX: 'auto',
-        }}
-      >
-        <Outlet />
-      </Box>
-    </Stack>
+    <AuthProvider>
+      <Stack>
+        <WrapperHeader />
+        <Box
+          sx={{
+            maxWidth: '1200px',
+            width: '100%',
+            marginY: [2, 3, 6],
+            marginX: 'auto',
+          }}
+        >
+          <Outlet />
+        </Box>
+      </Stack>
+    </AuthProvider>
   );
 };

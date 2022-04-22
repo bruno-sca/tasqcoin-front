@@ -7,9 +7,10 @@ import { useFeedback } from '../FeedbackContext';
 
 export const FeedbackHeader = () => {
   const {
-    data: { name },
+    data: { targetUser },
     actions: { setModalOpen },
   } = useFeedback();
+
   return (
     <Paper sx={{ mt: 8.5, mb: 4 }}>
       <Stack sx={{ px: 3.5 }}>
@@ -23,12 +24,13 @@ export const FeedbackHeader = () => {
               left: -1,
               transform: 'translateY(-50%)',
             }}
+            src={targetUser?.avatar_url}
           />
           <Typography
             variant="h5"
             sx={{ mt: 3.75, ml: 17.5, mb: 1, fontWeight: 'medium' }}
           >
-            {name}
+            {targetUser?.name}
           </Typography>
         </Box>
         <Box sx={{ position: 'relative', px: 1.5 }}>
