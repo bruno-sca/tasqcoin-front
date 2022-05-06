@@ -56,9 +56,11 @@ export const WrapperHeader = () => {
           sx={{
             height: 35,
             width: 35,
+            cursor: 'pointer',
           }}
           alt=""
           src={logo_purple}
+          onClick={() => setSearchParams({})}
         />
       </Stack>
       <SearchInput

@@ -75,11 +75,7 @@ export const SignInForm: React.FC<ISignInForm> = ({ setSignUp }) => {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Button
-          sx={{ textTransform: 'none', fontWeight: 'bold' }}
-          size="small"
-          variant="text"
-        >
+        <Button sx={{ fontWeight: 'bold' }} size="small" variant="text">
           Forgot Password?
         </Button>
         <Button disabled={loading} variant="contained" type="submit">
@@ -89,7 +85,7 @@ export const SignInForm: React.FC<ISignInForm> = ({ setSignUp }) => {
       <Stack sx={{ mt: 6 }} alignItems="center">
         <Button
           fullWidth
-          sx={{ textTransform: 'none', width: '100%', maxWidth: '290px' }}
+          sx={{ width: '100%', maxWidth: '290px' }}
           variant="outlined"
           onClick={setSignUp}
           disabled={loading}

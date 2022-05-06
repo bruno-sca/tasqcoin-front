@@ -32,3 +32,9 @@ type UserLoginResponse = {
   refresh_token: string;
   user: UserData;
 };
+
+type UserChangePasswordRequest = {
+  password: string;
+  newPassword: string;
+  confirmNewPassword: string;
+};

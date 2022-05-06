@@ -25,7 +25,6 @@ api.interceptors.response.use(
     return res;
   },
   async (err) => {
-    if (err.response?.data.message) toast.error(err.response.data.message);
     const originalConfig = err.config;
 
     const refreshToken =
@@ -55,8 +54,12 @@ api.interceptors.response.use(
       sessionStorage.setItem('prevUrl', window.location.pathname);
       window.location.href = '/auth';
 
+      toast.error('Invalid Token!');
+
       return Promise.reject(err);
     }
+
+    if (err.response?.data.message) toast.error(err.response.data.message);
 
     return Promise.reject(err);
   }

@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
 import { Wrapper } from './components';
-import { Feedback, Login } from './pages';
+import { Feedback, Login, UserProfile } from './pages';
 
 export const Router: React.FC = () => {
   return (
@@ -9,6 +9,7 @@ export const Router: React.FC = () => {
       <Route path="/auth" element={<Login />} />
       <Route path="/" element={<Wrapper />}>
         <Route path="/" element={<Feedback />} />
+        <Route path="/profile" element={<UserProfile />} />
       </Route>
     </Routes>
   );
