@@ -7,6 +7,7 @@ export type AuthContextType = {
   data: { user: UserData | null };
   actions: {
     logout: () => void;
+    updateUserData: () => void;
   };
 };
 
@@ -16,6 +17,7 @@ export const AuthContext = createContext<AuthContextType>({
   },
   actions: {
     logout: () => null,
+    updateUserData: () => null,
   },
 });
 
@@ -24,8 +26,11 @@ export const AuthProvider: FC = ({ children }) => {
 
   const [user, setUser] = useState<UserData | null>(null);
 
-  useEffect(() => {
+  const updateUserData = () =>
     services.user.getUserInfo().then(({ data }) => setUser(data));
+
+  useEffect(() => {
+    updateUserData();
   }, []);
 
   const logout = () => {
@@ -44,6 +49,7 @@ export const AuthProvider: FC = ({ children }) => {
         },
         actions: {
           logout,
+          updateUserData,
         },
       }}
     >

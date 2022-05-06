@@ -19,6 +19,7 @@ export const Wrapper = () => {
             width: '100%',
             marginY: [2, 3, 6],
             marginX: 'auto',
+            px: 3,
           }}
         >
           <Outlet />
