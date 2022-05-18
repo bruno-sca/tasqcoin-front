@@ -68,7 +68,7 @@ export const WrapperHeader = () => {
           }}
           alt=""
           src={logo_purple}
-          onClick={() => setSearchParams({})}
+          onClick={() => navigate('/')}
         />
       </Stack>
       <SearchInput
@@ -81,8 +81,11 @@ export const WrapperHeader = () => {
         value={null}
         inputValue={inputValue}
         onChange={(e, newValue: UserData) => {
-          setSearchParams({ user: newValue.id });
           setInputValue('');
+          // eslint-disable-next-line no-unused-expressions
+          window.location.pathname !== '/'
+            ? navigate(`/?user=${newValue.id}`)
+            : setSearchParams({ user: newValue.id });
         }}
         onInputChange={(event, newInputValue) => {
           setInputValue(newInputValue);
