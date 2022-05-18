@@ -1,13 +1,19 @@
-import { ExpandLess, ExpandMore, Logout } from '@mui/icons-material';
+import {
+  ExpandLess,
+  ExpandMore,
+  Logout,
+  PersonOutlineRounded,
+} from '@mui/icons-material';
 import { Box, Stack } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { Avatar, Typography, Menu, MenuItem } from '../..';
 import { logo_purple } from '../../../assets/images';
 import { useAuth } from '../../../contexts';
 import { useDebounceState } from '../../../hooks';
 import { services } from '../../../services';
+import { Divider } from '../../Divider';
 import { SearchInput } from '../../SearchInput';
 
 export const WrapperHeader = () => {
@@ -15,6 +21,8 @@ export const WrapperHeader = () => {
     data: { user },
     actions: { logout },
   } = useAuth();
+
+  const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState<
     (EventTarget & HTMLDivElement) | null
@@ -60,7 +68,7 @@ export const WrapperHeader = () => {
           }}
           alt=""
           src={logo_purple}
-          onClick={() => setSearchParams({})}
+          onClick={() => navigate('/')}
         />
       </Stack>
       <SearchInput
@@ -73,8 +81,11 @@ export const WrapperHeader = () => {
         value={null}
         inputValue={inputValue}
         onChange={(e, newValue: UserData) => {
-          setSearchParams({ user: newValue.id });
           setInputValue('');
+          // eslint-disable-next-line no-unused-expressions
+          window.location.pathname !== '/'
+            ? navigate(`/?user=${newValue.id}`)
+            : setSearchParams({ user: newValue.id });
         }}
         onInputChange={(event, newInputValue) => {
           setInputValue(newInputValue);
@@ -105,9 +116,28 @@ export const WrapperHeader = () => {
         anchorEl={anchorEl}
         onClose={() => setAnchorEl(null)}
       >
+        <MenuItem onClick={() => navigate('/profile')}>
+          <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            sx={{ width: '100%' }}
+          >
+            Meu Perfil
+            <PersonOutlineRounded sx={{ ml: 1.25, fontSize: '22px' }} />
+          </Stack>
+        </MenuItem>
+        <Divider />
         <MenuItem onClick={() => logout()}>
-          Sair
-          <Logout sx={{ ml: 1.5 }} />
+          <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            sx={{ width: '100%' }}
+          >
+            Sair
+            <Logout sx={{ fontSize: '18px', ml: 1.5 }} />
+          </Stack>
         </MenuItem>
       </Menu>
     </Stack>

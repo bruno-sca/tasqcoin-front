@@ -5,6 +5,7 @@ import { FeedbackProvider } from './FeedbackContext';
 import { FeedbackCreateModal } from './FeedbackCreateModal';
 import { FeedbackHeader } from './FeedbackHeader';
 import { FeedbackList } from './FeedbackList';
+import { FeedbackPagination } from './FeedbackList/FeedbackPagination';
 
 export const Feedback = () => {
   return (
@@ -15,6 +16,7 @@ export const Feedback = () => {
         <FeedbackList />
       </Stack>
       <FeedbackCreateModal />
+      <FeedbackPagination />
     </FeedbackProvider>
   );
 };
