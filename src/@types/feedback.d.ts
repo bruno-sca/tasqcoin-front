@@ -8,8 +8,11 @@ type Feedback = {
   user_from: UserData;
 };
 
+type FeedbackType = 'both' | 'sent' | 'recieved';
+
 type ListFeedbackRequest = {
   id?: string;
+  feedbackType?: FeedbackType;
   page?: number;
   pageSize?: number;
 };

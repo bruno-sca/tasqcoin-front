@@ -15,6 +15,7 @@ export type FeedbackContextType = {
   data: {
     balance: number;
     targetUser: UserData;
+    feedbackType: FeedbackType;
     feedbacksData: {
       feedbacks: Feedback[];
       totalPages: number;
@@ -23,6 +24,7 @@ export type FeedbackContextType = {
     isModalOpen: boolean;
   };
   actions: {
+    changeFeedbackType: (type: FeedbackType) => void;
     changePage: (page: number) => void;
     setModalOpen: (open: boolean) => void;
     reloadFeedbacks: () => void;
@@ -33,6 +35,7 @@ export const FeedbackContext = createContext<FeedbackContextType>({
   data: {
     balance: 0,
     targetUser: null,
+    feedbackType: null,
     feedbacksData: {
       feedbacks: [],
       totalPages: 0,
@@ -41,6 +44,7 @@ export const FeedbackContext = createContext<FeedbackContextType>({
     isModalOpen: false,
   },
   actions: {
+    changeFeedbackType: () => null,
     changePage: () => null,
     reloadFeedbacks: () => null,
     setModalOpen: () => null,
@@ -53,7 +57,10 @@ export const FeedbackProvider: FC = ({ children }) => {
 
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [balance, setBalance] = useState(0);
+
   const [targetUser, setTargetUser] = useState<UserData | null>();
+  const [feedbackType, setFeedbackType] = useState<FeedbackType>('both');
+
   const [needReload, setNeedReload] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -63,12 +70,16 @@ export const FeedbackProvider: FC = ({ children }) => {
 
   useEffect(() => {
     services.feedback
-      .listUserFeedbacks({ page, ...(targetUserId && { id: targetUserId }) })
+      .listUserFeedbacks({
+        page,
+        ...(targetUserId && { id: targetUserId }),
+        feedbackType,
+      })
       .then(({ data }) => {
         setFeedbacks(data.feedbacks);
         setTotalPages(data.totalPages);
       });
-  }, [page, targetUserId]);
+  }, [feedbackType, page, targetUserId]);
 
   useEffect(() => {
     services.feedback.getUserBalance(targetUserId).then(({ data }) => {
@@ -111,6 +122,7 @@ export const FeedbackProvider: FC = ({ children }) => {
       data: {
         balance,
         targetUser,
+        feedbackType,
         feedbacksData: {
           feedbacks,
           totalPages,
@@ -119,12 +131,22 @@ export const FeedbackProvider: FC = ({ children }) => {
         isModalOpen,
       },
       actions: {
+        changeFeedbackType: (type: FeedbackType) => setFeedbackType(type),
         changePage,
         reloadFeedbacks: () => setNeedReload(true),
         setModalOpen: (bool: boolean) => setIsModalOpen(bool),
       },
     }),
-    [balance, feedbacks, isModalOpen, targetUser, totalPages, page, changePage]
+    [
+      balance,
+      feedbacks,
+      feedbackType,
+      isModalOpen,
+      targetUser,
+      totalPages,
+      page,
+      changePage,
+    ]
   );
 
   return (
