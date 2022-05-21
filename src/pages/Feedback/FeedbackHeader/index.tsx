@@ -7,8 +7,8 @@ import { useFeedback } from '../FeedbackContext';
 
 export const FeedbackHeader = () => {
   const {
-    data: { targetUser },
-    actions: { setModalOpen },
+    data: { targetUser, feedbackType },
+    actions: { setModalOpen, changeFeedbackType },
   } = useFeedback();
 
   return (
@@ -37,12 +37,13 @@ export const FeedbackHeader = () => {
           <Tabs
             textColor="secondary"
             indicatorColor="secondary"
-            value="1"
+            value={feedbackType}
+            onChange={(_, value) => changeFeedbackType(value)}
             sx={{ textTransform: 'none' }}
           >
-            <Tab label="Geral" value="1" />
-            <Tab label="Recebidos" value="2" />
-            <Tab label="Enviados" value="3" />
+            <Tab label="Geral" value="both" />
+            <Tab label="Recebidos" value="recieved" />
+            <Tab label="Enviados" value="sent" />
           </Tabs>
           <IconButton
             onClick={() => setModalOpen(true)}
