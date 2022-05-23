@@ -55,6 +55,7 @@ export const SignInForm: React.FC<ISignInForm> = ({ setSignUp }) => {
       <Stack spacing={1}>
         <TextField
           fullWidth
+          data-test-id="emailLoginInput"
           onChange={handleChange}
           name="email"
           label="E-mail"
@@ -62,6 +63,7 @@ export const SignInForm: React.FC<ISignInForm> = ({ setSignUp }) => {
         />
         <TextField
           fullWidth
+          data-test-id="passwordLoginInput"
           onChange={handleChange}
           name="password"
           label="Password"
@@ -78,7 +80,12 @@ export const SignInForm: React.FC<ISignInForm> = ({ setSignUp }) => {
         <Button sx={{ fontWeight: 'bold' }} size="small" variant="text">
           Forgot Password?
         </Button>
-        <Button disabled={loading} variant="contained" type="submit">
+        <Button
+          data-test-id="loginButton"
+          disabled={loading}
+          variant="contained"
+          type="submit"
+        >
           log in
         </Button>
       </Stack>

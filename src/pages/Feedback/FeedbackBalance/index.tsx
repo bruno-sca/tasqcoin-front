@@ -14,6 +14,7 @@ export const FeedbackBalance = () => {
       <Grid item xs={1}>
         <FeedbackBalanceCard
           title="Saldo Atual"
+          data-test-id="currentBalanceCard"
           amount={balance}
           icon={<Paid color="secondary" />}
         />

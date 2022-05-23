@@ -52,6 +52,7 @@ export const SignUpForm = ({ setSignIn }: ISignUpForm) => {
       <Stack spacing={1}>
         <TextField
           onChange={handleChange}
+          required
           fullWidth
           name="name"
           label="Name"
@@ -59,6 +60,7 @@ export const SignUpForm = ({ setSignIn }: ISignUpForm) => {
         />
         <TextField
           onChange={handleChange}
+          required
           fullWidth
           name="email"
           label="E-mail"
@@ -66,6 +68,7 @@ export const SignUpForm = ({ setSignIn }: ISignUpForm) => {
         />
         <TextField
           onChange={handleChange}
+          required
           fullWidth
           name="password"
           label="Password"
@@ -74,6 +77,7 @@ export const SignUpForm = ({ setSignIn }: ISignUpForm) => {
         />
         <TextField
           onChange={handleChange}
+          required
           fullWidth
           name="confirmPassword"
           label="Confirm Password"
