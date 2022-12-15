@@ -16,7 +16,11 @@ import { services } from '../../../services';
 import { Divider } from '../../Divider';
 import { SearchInput } from '../../SearchInput';
 
-export const WrapperHeader = () => {
+export const WrapperHeader = ({
+  setIsLogged,
+}: {
+  setIsLogged: (isLogged: boolean) => void;
+}) => {
   const {
     data: { user },
     actions: { logout },
@@ -128,7 +132,12 @@ export const WrapperHeader = () => {
           </Stack>
         </MenuItem>
         <Divider />
-        <MenuItem onClick={() => logout()}>
+        <MenuItem
+          onClick={() => {
+            logout();
+            setIsLogged(false);
+          }}
+        >
           <Stack
             direction="row"
             justifyContent="center"

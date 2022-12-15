@@ -1,5 +1,5 @@
 import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
-import { Paper, Stack, Tooltip } from '@mui/material';
+import { Paper, Stack, Tooltip, useTheme } from '@mui/material';
 import dayjs from 'dayjs';
 import { useSearchParams } from 'react-router-dom';
 
@@ -12,7 +12,9 @@ export const FeedbackListCard = ({
   type,
   user_from,
   user_to,
+  is_dark,
 }: Feedback) => {
+  const theme = useTheme();
   const user: UserData = type === 'sent' ? user_to : user_from;
   const [, setSearchParams] = useSearchParams();
   return (
@@ -37,7 +39,7 @@ export const FeedbackListCard = ({
             sx={{
               textAlign: 'center',
               font: 'normal normal bold 18px/20px Roboto',
-              color: '#172031',
+              color: is_dark ? theme.palette.error.main : '#172031',
               mb: 2,
             }}
           >

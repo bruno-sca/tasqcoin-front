@@ -1,5 +1,6 @@
 export * from './Avatar';
 export * from './Button';
+export * from './ColoredText';
 export * from './Divider';
 export * from './IconButton';
 export * from './Menu';

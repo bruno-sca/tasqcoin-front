@@ -8,7 +8,11 @@ import { Typography } from '../../components/Typography';
 import { SignInForm } from './SignInForm';
 import { SignUpForm } from './SignUpForm';
 
-export const Login: React.FC = () => {
+export const Login = ({
+  setIsLogged,
+}: {
+  setIsLogged?: (isLogged: boolean) => void;
+}) => {
   const [isSignIn, setIsSignIn] = useState(true);
 
   return (
@@ -95,7 +99,10 @@ export const Login: React.FC = () => {
             isSignIn ? 'In' : 'Up'
           }`}</Typography>
           {isSignIn ? (
-            <SignInForm setSignUp={() => setIsSignIn(false)} />
+            <SignInForm
+              setIsLogged={setIsLogged}
+              setSignUp={() => setIsSignIn(false)}
+            />
           ) : (
             <SignUpForm setSignIn={() => setIsSignIn(true)} />
           )}

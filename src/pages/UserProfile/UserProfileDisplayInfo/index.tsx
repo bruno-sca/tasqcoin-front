@@ -1,6 +1,7 @@
 import { Add } from '@mui/icons-material';
 import { Box, Button, Stack } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useQueryClient } from 'react-query';
 import { toast } from 'react-toastify';
 
 import { Avatar, TextField, Typography } from '../../../components';
@@ -10,8 +11,9 @@ import { services } from '../../../services';
 export const UserProfileDisplayInfo = () => {
   const {
     data: { user },
-    actions: { updateUserData },
   } = useAuth();
+
+  const queryClient = useQueryClient();
 
   const [avatar, setAvatar] = useState<File>();
   const [loading, setLoading] = useState(false);
@@ -24,12 +26,12 @@ export const UserProfileDisplayInfo = () => {
   const handleSubmit = async () => {
     setLoading(true);
     await Promise.all([
-      services.user.changeUserAvatar(avatar),
-      ...(avatar && [services.user.changeUserName(userName)]),
+      services.user.changeUserName(userName),
+      ...(avatar ? [services.user.changeUserAvatar(avatar)] : []),
     ])
       .then(() => {
         toast.success('Profile updated successfully!');
-        updateUserData();
+        queryClient.invalidateQueries('user-data');
       })
       .finally(() => setLoading(false));
   };
@@ -71,10 +73,13 @@ export const UserProfileDisplayInfo = () => {
               <input
                 onChange={({ target: { files } }) => setAvatar(files[0])}
                 type="file"
+                accept=".png,.jpeg,.jpg"
                 hidden
               />
             </Button>
-            <Typography>Formatos: png, jpg.</Typography>
+            <Typography>
+              {!avatar ? 'Formatos: png, jpg.' : avatar.name}
+            </Typography>
           </Stack>
         </Stack>
       </Stack>

@@ -4,6 +4,7 @@ type UserData = {
   email: string;
   avatar_url?: string;
   balance: number;
+  dark_balance: number;
   [x: string]: unknown;
 };
 

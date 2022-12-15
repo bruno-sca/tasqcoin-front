@@ -1,18 +1,22 @@
 import { Box, Stack } from '@mui/material';
-import { Navigate, Outlet } from 'react-router-dom';
+import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 
 import { AuthProvider } from '../../contexts';
+import { Login } from '../../pages';
 import { WrapperHeader } from './WrapperHeader';
 
 export const Wrapper = () => {
-  const token = localStorage.getItem('@tasq/token');
+  const [isLogged, setIsLogged] = useState(
+    !!localStorage.getItem('@tasq/token')
+  );
 
-  if (!token) return <Navigate to="/auth" />;
+  if (!isLogged) return <Login setIsLogged={(logged) => setIsLogged(logged)} />;
 
   return (
     <AuthProvider>
       <Stack>
-        <WrapperHeader />
+        <WrapperHeader setIsLogged={(logged) => setIsLogged(logged)} />
         <Box
           sx={{
             maxWidth: '1200px',

@@ -1,5 +1,5 @@
-import { createContext, FC, useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { createContext, FC, useContext } from 'react';
+import { useQuery } from 'react-query';
 
 import { services } from '../services';
 
@@ -7,7 +7,6 @@ export type AuthContextType = {
   data: { user: UserData | null };
   actions: {
     logout: () => void;
-    updateUserData: () => void;
   };
 };
 
@@ -17,26 +16,17 @@ export const AuthContext = createContext<AuthContextType>({
   },
   actions: {
     logout: () => null,
-    updateUserData: () => null,
   },
 });
 
 export const AuthProvider: FC = ({ children }) => {
-  const navigate = useNavigate();
-
-  const [user, setUser] = useState<UserData | null>(null);
-
-  const updateUserData = () =>
-    services.user.getUserInfo().then(({ data }) => setUser(data));
-
-  useEffect(() => {
-    updateUserData();
-  }, []);
+  const { data: user } = useQuery('user-data', () =>
+    services.user.getUserInfo().then(({ data }) => data)
+  );
 
   const logout = () => {
     localStorage.removeItem('@tasq/refresh_token');
     localStorage.removeItem('@tasq/token');
-    navigate('/auth');
   };
 
   return (
@@ -49,7 +39,6 @@ export const AuthProvider: FC = ({ children }) => {
         },
         actions: {
           logout,
-          updateUserData,
         },
       }}
     >

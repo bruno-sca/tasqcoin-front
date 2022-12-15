@@ -4,7 +4,9 @@ type FeedbackService = {
   listUserFeedbacks(
     payload?: ListFeedbackRequest
   ): ApiResponse<ListFeedbackResponse>;
-  getUserBalance(payload?: string): ApiResponse<number>;
+  getUserBalance(
+    payload?: string
+  ): ApiResponse<{ balance: number; dark_balance: number }>;
   createFeedback(payload?: CreateFeedbackRequest): ApiResponse<void>;
 };
 

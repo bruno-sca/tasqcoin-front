@@ -4,6 +4,7 @@ type Feedback = {
   amount: number;
   type: 'recieved' | 'sent';
   created_at: string;
+  is_dark: boolean;
   user_to: UserData;
   user_from: UserData;
 };
@@ -26,4 +27,5 @@ type CreateFeedbackRequest = {
   user_to_id: string;
   description?: string;
   amount: number;
+  is_dark: boolean;
 };

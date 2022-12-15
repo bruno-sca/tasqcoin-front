@@ -12,10 +12,15 @@ interface IFormState {
 
 interface ISignInForm {
   setSignUp: () => void;
+  setIsLogged?: (isLogged: boolean) => void;
 }
 
-export const SignInForm: React.FC<ISignInForm> = ({ setSignUp }) => {
+export const SignInForm: React.FC<ISignInForm> = ({
+  setSignUp,
+  setIsLogged,
+}) => {
   const navigate = useNavigate();
+
   const [formState, setFormState] = useState<IFormState>({
     email: '',
     password: '',
@@ -27,9 +32,10 @@ export const SignInForm: React.FC<ISignInForm> = ({ setSignUp }) => {
     if (setLoading) setLoading(true);
     await services.auth
       .login(formState)
-      .then(({ data: { refresh_token, token, user: userData } }) => {
+      .then(({ data: { refresh_token, token } }) => {
         localStorage.setItem('@tasq/refresh_token', refresh_token);
         localStorage.setItem('@tasq/token', token);
+        if (setIsLogged) setIsLogged(true);
 
         const url = sessionStorage.getItem('prevUrl');
         if (url) sessionStorage.removeItem('prevUrl');

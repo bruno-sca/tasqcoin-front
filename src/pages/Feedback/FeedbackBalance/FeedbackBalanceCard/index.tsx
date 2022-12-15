@@ -1,9 +1,10 @@
 import { Paper, Stack } from '@mui/material';
 import { ReactNode } from 'react';
+
 import { Typography } from '../../../../components';
 
 type FeedbackBalanceCardProps = {
-  title: string;
+  title: string | ReactNode;
   icon: ReactNode;
   amount: number;
 };
