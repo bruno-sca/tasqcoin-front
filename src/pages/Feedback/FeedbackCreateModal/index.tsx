@@ -28,7 +28,7 @@ type CreateFeedbackForm = {
   targetUser: UserData | undefined;
   amount: number;
   description: string;
-  is_dark: 'true' | 'false';
+  is_dark: 'true' | '';
 };
 
 export const FeedbackCreateModal = () => {
@@ -58,7 +58,7 @@ export const FeedbackCreateModal = () => {
       targetUser: undefined,
       amount: 0,
       description: '',
-      is_dark: 'false',
+      is_dark: '',
     },
     onSubmit: async ({ targetUser, is_dark, ...rest }) =>
       services.feedback
@@ -145,7 +145,7 @@ export const FeedbackCreateModal = () => {
               value={values.is_dark}
               onChange={handleChange}
             >
-              <MenuItem value="false">Positivo</MenuItem>
+              <MenuItem value="">Positivo</MenuItem>
               <MenuItem value="true">Negativo</MenuItem>
             </Select>
             {touched.is_dark && errors.is_dark && (
